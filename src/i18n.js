@@ -32,22 +32,40 @@
  *
  */
 
-import ImageCapture from "./image-capture";
-import {FileChecker} from "./checkers/file-checker";
-import {QualityChecker} from "./checkers/quality-checker";
-import {RatioChecker} from "./checkers/ratio-checker";
-import {DimensionChecker} from "./checkers/dimension-checker";
-import {FileSizeChecker} from "./checkers/file-size-checker";
+export const i18n = {
+    modal_title: "Upload New Image",
+    modal_close: "Close",
+    modal_description: "Here you can choose and upload images to your application",
 
-((S)=>{
-    Object.assign(S, {
-        ImageCapture,
-        Checker: {
-            FileChecker,
-            QualityChecker,
-            RatioChecker,
-            DimensionChecker,
-            FileSizeChecker
-        }
-    })
-})(window.Skyline);
+    modal_cancel: "Cancel",
+    modal_accept: "Upload",
+
+    quality_title: "Quality",
+    quality_perfect: "Perfect",
+    quality_OK: "OK",
+    quality_sufficient: "Sufficient",
+    quality_scarce: "Scarce",
+    quality_insufficient: "insufficient",
+
+    ratio_title: "Aspect Ratio",
+    ratio_bad: "Bad ratio (required 16:9 until 1:1)",
+
+    dimension_title: "Dimension",
+    size_title: "Size",
+
+    property_slug_error: "Slug must only contain latin characters",
+
+    image_load_error: "Could not load the image.",
+
+    property_slug_label: "Slug",
+    property_slug_placeholder: "my-file",
+    property_caption_label: 'Caption',
+    property_caption_placeholder: "My Image",
+    property_alt_label: "Alt",
+    property_alt_placeholder: "Text in error case",
+
+    options_label: "Options",
+    option_scale_to_best: "Scale to optimal size",
+    option_render_preview: "Render preview",
+    option_make_watermark: "Render Watermark"
+}

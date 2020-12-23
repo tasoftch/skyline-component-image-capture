@@ -1,0 +1,83 @@
+<!--
+  ~ BSD 3-Clause License
+  ~
+  ~ Copyright (c) 2019, TASoft Applications
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without
+  ~ modification, are permitted provided that the following conditions are met:
+  ~
+  ~ * Redistributions of source code must retain the above copyright notice, this
+  ~   list of conditions and the following disclaimer.
+  ~
+  ~ * Redistributions in binary form must reproduce the above copyright notice,
+  ~   this list of conditions and the following disclaimer in the documentation
+  ~   and/or other materials provided with the distribution.
+  ~
+  ~ * Neither the name of the copyright holder nor the names of its
+  ~   contributors may be used to endorse or promote products derived from
+  ~   this software without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  ~ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  ~ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  ~ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  ~ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  ~ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  ~ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  ~ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  ~ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ~ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script type="application/javascript">!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.skyline=t():e.skyline=t()}(window,(function(){return function(e){var t={};function n(r){if(t[r])return t[r].exports;var i=t[r]={i:r,l:!1,exports:{}};return e[r].call(i.exports,i,i.exports,n),i.l=!0,i.exports}return n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var i in e)n.d(r,i,function(t){return e[t]}.bind(null,i));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=0)}([function(e,t,n){"use strict";n.r(t);let r=(e,t)=>{let n={c:t,r:0};return"string"==typeof e&&e.length>0&&(1===e.length?n.r=1*e:(n.c=e.substr(0,1),n.r=1*e.substr(1))),n},i=(e,t)=>{e=""+e;let n=Math.max(0,t.r-e.length);return"string"==typeof t.c?t.c.repeat(n):""};var o={formats:{s:(e,t)=>{let{modifier:n,flag:o}=t,s=r(""," "),a=!1;"'"===n?s=r(o," "):"-'"===n?(s=r(o," "),a=!0):"-"===n?(s.r=1*o,a=!0):void 0!==o&&(s.r=1*o);let u=i(e,s);return a?`${u}${e}`:`${e}${u}`},d:(e,t)=>{e=""+1*e;let{flag:n}=t,o=r(n,"0");return`${i(e,o)}${1*e}`},x:(e,t)=>{let{flag:n}=t,o=r(n,"0"),s=i(e,o),a=[0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f"];if(/^\d+$/.test(e)){let t="";for(e*=1;e;)t=`${a[e%16]}${t}`,e>>=4;return`${s}${t}`}return""},X:(e,t)=>{let{flag:n}=t,o=r(n,"0"),s=i(e,o),a=[0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F"];if(/^\d+$/.test(e)){let t="";for(e*=1;e;)t=`${a[e%16]}${t}`,e>>=4;return`${s}${t}`}return""},f:(e,t)=>{let{modifier:n,flag:r}=t;if("."===n){r=Math.min(16,r);let t=Math.pow(10,r),n=(e=""+Math.round(e*t)).length-r;return[n<1?"0":e.slice(0,n),".",e.slice(n)].join("")}return Math.round(1e8*e)/1e8},c:e=>String.fromCharCode(e%256),C:e=>String.fromCharCode(1*e)},format:function(e,...t){let n=e.split(/(%(?:[\-.]?\d+|-?'.\d+|)[a-z])/gi),r=0;return n.map(n=>{let i=/^%(?:([\-.]?)(\d+)|(-?')(.\d+)|)([a-z])$/i.exec(n);if(i){let[,n,o,s,a,u]=i,l=t[r++];if(this.formats[u])return void 0===l?(console.warn(`format ${e} missing argument at index ${r-1}`),""):this.formats[u].call(this,l,{modifier:n||s,flag:o||a})||"##"}return n}).join("")}},s={i18n:{months:["January","February","March","April","May","June","July","August","September","October","November","December"],monthsShort:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],weekdays:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],weekdaysShort:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],weekdaysAbbrev:["S","M","T","W","T","F","S"]},formats:{d:e=>e.getDate(),dd:e=>{let t=e.getDate();return(t<10?"0":"")+t},ddd:function(e){return this.i18n.weekdaysShort[e.getDay()]},dddd:function(e){return this.i18n.weekdays[e.getDay()]},m:e=>e.getMonth()+1,mm:e=>{let t=e.getMonth()+1;return(t<10?"0":"")+t},mmm:function(e){return this.i18n.monthsShort[e.getMonth()]},mmmm:function(e){return this.i18n.months[e.getMonth()]},yy:e=>(""+e.getFullYear()).slice(2),yyyy:e=>e.getFullYear(),g:e=>e.getHours(),h:e=>{let t=e.getHours()%12;return 0===t?12:t},H:e=>{let t=e.getHours()%12;return t=0===t?12:t,(t<10?"0":"")+t},G:e=>{let t=e.getHours();return(t<10?"0":"")+t},i:e=>{let t=e.getMinutes();return(t<10?"0":"")+t},s:e=>{let t=e.getSeconds();return(t<10?"0":"")+t},a:e=>e.getHours()>11?"pm":"am",A:e=>e.getHours()>11?"PM":"AM"},format:function(e,t){let n=e.split(/(d{1,4}|m{1,4}|y{4}|yy|A|a|G|g|H|h|i|s|!.)/g);return void 0===t&&(t=new Date),n.map(e=>this.formats[e]?this.formats[e].call(this,t):e).join("")},isDate:e=>/Date/.test(Object.prototype.toString.call(e))&&!isNaN(e.getTime()),isWeekend:e=>{let t=e.getDay();return 0===t||6===t},setToDayBegin:function(e){this.isDate(e)&&e.setHours(0,0,0,0)},setToDayEnd:function(e){this.isDate(e)&&e.setHours(23,59,59,9999)},getDaysInMonth:function(e,t){return[31,this.isLeapYear(e)?29:28,31,30,31,30,31,31,30,31,30,31][t]},isLeapYear:e=>e%4==0&&e%100!=0||e%400==0,compareDates:function(e,t,n){if(this.isDate(e)&&this.isDate(t)){n&&(this.setToDayBegin(e),this.setToDayBegin(t));let r=e.getTime(),i=t.getTime();return r<i?-1:r>i?1:0}return!1}},a={useDecimal:!1,formats:["B","kB","MB","GB","TB","AB"],format:function(e,t){const n=this.useDecimal?1e3:1024;let r=0;for(;e>n;)r++,e/=n;t||(t="%.1f%s");let i=this.formats[r];return i||(i="??"),Skyline.String.format(t,e,i)}};class u{constructor(e){this.list=[];for(const t in e)e.hasOwnProperty(t)&&this.list.push(t)}remove(e){this.list.splice(this.list.indexOf(e),1)}contains(e){return-1!==this.list.indexOf(e)}each(e){this.list.forEach(t=>{e.call(t,t)})}get length(){return this.list.length}}class l{constructor(){this.observers=[]}addObserver(e,t,n){n||(n=this.getPropertyList(t));n instanceof u&&n.each(n=>{t.__defineSetter__(n,r=>{let i=t["_"+n];t["_"+n]=r,((t,n,r)=>{"function"==typeof e?e({old:t,new:n,key:r}):"object"==typeof e&&("function"==typeof e.changed?e.changed({old:t,new:n,key:r}):"function"==typeof e[r]&&e[r]({old:t,new:n}))})(i,r,n)}),t.__defineGetter__(n,()=>t["_"+n])})}getPropertyList(e){return new u(e)}eachProperty(e,t){this.getPropertyList(e).each(n=>{t(e[n],n)})}}const c={raw:!1,json:!1,defaults:{}},d=e=>c.raw?e:encodeURIComponent(e),f=e=>d(c.json?JSON.stringify(e):String(e)),y=(e,t)=>(e=(e=>{0===e.indexOf('"')&&(e=e.slice(1,-1).replace(/\\"/g,'"').replace(/\\\\/g,"\\"));try{return e=decodeURIComponent(e.replace(/\+/i," ")),c.json?JSON.parse(e):e}catch(e){}})(e),"function"==typeof t?t(e):e);var h={get config(){return c},set(e,t,n){if("number"==typeof(n=Object.assign({},c.defaults,n)).expires){var r=n.expires,i=n.expires=new Date;i.setMilliseconds(i.getMilliseconds()+864e5*r)}return document.cookie=[d(e),"=",f(t),n.expires?"; expires="+n.expires.toUTCString():"",n.path?"; path="+n.path:"",n.domain?"; domain="+n.domain:"",n.secure?"; secure":""].join("")},get(e,t){const n=document.cookie?document.cookie.split("; "):[],r=e?void 0:{};for(let o=0;o<n.length;o++){let s=n[o].split("="),a=(i=s.shift(),c.raw?i:decodeURIComponent(i)),u=s.join("=");if(e===a)return y(u,t);e||void 0===(u=y(u,t))||(r[a]=u)}var i;return r},clear(e,t){return this.set(e,"",Object.assign({},c.defaults,t,{expires:-1})),!this.get(e)}};window.jQuery,window.Skyline||(window.Skyline={guid:function(){function e(){return Math.floor(65536*(1+Math.random())).toString(16).substring(1)}return function(){return e()+e()+"-"+e()+"-"+e()+"-"+e()+"-"+e()+e()+e()}}(),version:"0.8.1",keys:{TAB:9,ENTER:13,ESC:27,ARROW_UP:38,ARROW_DOWN:40},tabPressed:!1,keyDown:!1,String:o,Date:s,Byte:a,Observer:new l,Cookie:h}),document.addEventListener("keydown",(function(e){Skyline.keyDown=!0,e.which!==Skyline.keys.TAB&&e.which!==Skyline.keys.ARROW_DOWN&&e.which!==Skyline.keys.ARROW_UP||(Skyline.tabPressed=!0)}),!0),document.addEventListener("keyup",(function(e){Skyline.keyDown=!1,e.which!==Skyline.keys.TAB&&e.which!==Skyline.keys.ARROW_DOWN&&e.which!==Skyline.keys.ARROW_UP||(Skyline.tabPressed=!1)}),!0),document.addEventListener("focus",(function(e){Skyline.keyDown&&document.body.classList.add("keyboard-focused")}),!0),document.addEventListener("blur",(function(e){document.body.classList.remove("keyboard-focused")}),!0)}])}));</script>
+    <link rel="stylesheet" href="dist/skyline-component-image-capture.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+</head>
+<body>
+<button class="btn btn-primary" onclick="runImageCapture()">
+    Run
+</button>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+<script src="dist/skyline-component-image-capture.min.js"></script>
+<script type="application/javascript">
+    function runImageCapture() {
+        Skyline.ImageCapture.run();
+    }
+
+    Skyline.ImageCapture.on("save", ({properties, options, progress, done}) => {
+        console.log(properties, options);
+        setTimeout(()=>{
+            progress(0.25);
+        }, 1000);
+
+        setTimeout(()=>{
+            progress(0.46);
+        }, 2000);
+
+        setTimeout(()=>{
+            progress(0.76);
+        }, 3000);
+
+        setTimeout(()=>{
+            progress(0.87);
+        }, 4000);
+
+        setTimeout(()=>{
+            done();
+        }, 5000);
+    });
+    Skyline.ImageCapture.on("cancel", () => {
+        console.log("Cancel");
+    })
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 {
   "name": "skyline-component-image-capture",
-  "version": "0.0.45",
+  "version": "0.0.109",
   "description": "A description",
   "scripts": {
     "lint": "eslint src",
