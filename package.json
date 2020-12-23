@@ -1,0 +1,36 @@
+{
+  "name": "skyline-component-image-capture",
+  "version": "0.0.45",
+  "description": "A description",
+  "scripts": {
+    "lint": "eslint src",
+    "v:patch": "npm version --no-git-tag-version patch",
+    "build:css": "node-sass --output-style compressed --precision 6 style/main.scss dist/skyline-component-image-capture.min.css",
+    "build": "npm rum build:css && npm run v:patch && webpack --env.production"
+  },
+  "keywords": [],
+  "author": "Thomas Abplanalp",
+  "license": "MIT",
+  "babel": {
+    "presets": [
+      "env"
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.19.1",
+    "node-sass": "^5.0.0",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "underscore": "^1.8.3",
+    "underscore.string": "^3.3.4"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "skyline/component-image-capture",
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Thomas Abplanalp",
+      "email": "info@tasoft.ch"
+    }
+  ],
+  "require" : {
+    "php": "^7.2",
+    "skyline/component-skyline": "^0.8"
+  },
+  "require-dev": {
+    "skyline/direct-components": "^0.8"
+  }
+}
