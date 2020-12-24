@@ -13,7 +13,7 @@ $parseSize = function($s) {
 }
     ?>
 (function(IC) {
-    IC.LIMITS.FILE_SIZE: <?= $parseSize( ini_get("upload_max_filesize") ) ?>;
-    IC.LIMITS.UPLOADS:   <?= ini_get("max_file_uploads") ?>;
-    IC.LIMITS.POST_SIZE: <?= $parseSize( ini_get("post_max_size") ) ?>;
+    IC.LIMITS.FILE_SIZE = <?= $parseSize( ini_get("upload_max_filesize") ) ?>;
+    IC.LIMITS.UPLOADS =   <?= ini_get("max_file_uploads") ?>;
+    IC.LIMITS.POST_SIZE = <?= $parseSize( ini_get("post_max_size") ) ?>;
 })(window.Skyline.ImageCapture);
