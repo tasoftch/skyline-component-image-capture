@@ -69,6 +69,10 @@ class ImageCapture extends Emitter {
         return this;
     }
 
+    clearCheckers() {
+        this.checkers.forEach(c=>this-this.removeChecker(c));
+    }
+
     addProperty(property) {
         if(property instanceof Property) {
             this.properties.set(property.name, property);
@@ -89,6 +93,10 @@ class ImageCapture extends Emitter {
         return this;
     }
 
+    clearProperties() {
+        this.properties.forEach(c=>this-this.removeProperty(c));
+    }
+
     addOption(option) {
         if(typeof option.id === 'number') {
             this.options.set(option.id, option);
@@ -106,6 +114,10 @@ class ImageCapture extends Emitter {
             this.view.removeOption(opt);
         this.options.delete(option);
         return this;
+    }
+
+    clearOptions() {
+        this.options.forEach(c=>this-this.removeOption(c));
     }
 
     run(target) {
