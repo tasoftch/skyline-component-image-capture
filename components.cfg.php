@@ -36,7 +36,9 @@ return [
 		'js-dyn' => new JavaScriptPostLoadComponent(
 			...AbstractComponent::makeLocalFileComponentArguments(
 				'/Public/Skyline/image-capture.dyn.min.js',
-				__DIR__ . "/dist/skyline-component-image-capture.js.php"
+				__DIR__ . "/dist/skyline-component-image-capture.js.php",
+				NULL,
+				NULL
 			)
 		),
 		'css' => new CSSComponent(
