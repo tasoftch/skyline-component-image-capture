@@ -1,11 +1,19 @@
 import {FileChecker} from "./file-checker";
 import {i18n} from "../i18n";
 
-const _qualityBreakpoints = [
+const _imageBreakpoints = [
     {q:0, l: i18n.quality_insufficient, c: 'danger', ok: false},
     {q:768, l: i18n.quality_scarce, c: 'warning', ok: true},
     {q:1439, l: i18n.quality_sufficient, c: 'warning', ok: true},
     {q:1919, l: i18n.quality_sufficient, c: 'success', ok: true},
+    {q:200000, l: i18n.quality_perfect, c: 'success', ok: true}
+]
+
+const _iconBreakpoints = [
+    {q:0, l: i18n.quality_insufficient, c: 'danger', ok: false},
+    {q:100, l: i18n.quality_scarce, c: 'warning', ok: true},
+    {q:256, l: i18n.quality_sufficient, c: 'warning', ok: true},
+    {q:512, l: i18n.quality_sufficient, c: 'success', ok: true},
     {q:200000, l: i18n.quality_perfect, c: 'success', ok: true}
 ]
 
@@ -17,7 +25,8 @@ export class QualityChecker extends FileChecker {
             "                            </li>\n";
     }
 
-    static get qualityBreakpoints() { return _qualityBreakpoints; }
+    static get IMAGE_BREAKPOINTS() { return _imageBreakpoints; }
+    static get ICON_BREAKPOINTS() { return _iconBreakpoints; }
 
     constructor(breakpoints) {
         super();

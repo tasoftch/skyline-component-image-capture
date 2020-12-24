@@ -216,6 +216,7 @@ class ImageCapture extends Emitter {
 }
 
 export default new ImageCapture({
+    /*  By default, the image checker needs to be configured depending on your application.
     checkers:[
         new QualityChecker( QualityChecker.qualityBreakpoints ),
         new RatioChecker(16/9),
@@ -232,4 +233,5 @@ export default new ImageCapture({
         new Option({id:2, label: i18n.option_render_preview, checkedByDefault: true}),
         new Option({id:4, label: i18n.option_make_watermark, checkedByDefault: false})
     ]
+     */
 });
