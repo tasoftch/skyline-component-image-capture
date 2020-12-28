@@ -36,3 +36,24 @@ export class Option extends Renderable {
         el.checked = this.checked;
     }
 }
+
+export class DisabledOption extends Option {
+    constructor({id, label, checkedByDefault = false}) {
+        super({id, label, checkedByDefault});
+    }
+
+    bindTemplate($container) {
+        super.bindTemplate($container);
+        this.disable();
+    }
+
+    enable() {
+        this.bound.removeClass("text-muted");
+        this.boundI.attr("disabled", false);
+    }
+
+    disable() {
+        this.bound.addClass("text-muted");
+        this.boundI.attr("disabled", 'disabled');
+    }
+}
