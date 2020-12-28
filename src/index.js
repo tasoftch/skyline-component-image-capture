@@ -38,16 +38,61 @@ import {QualityChecker} from "./checkers/quality-checker";
 import {RatioChecker} from "./checkers/ratio-checker";
 import {DimensionChecker} from "./checkers/dimension-checker";
 import {FileSizeChecker} from "./checkers/file-size-checker";
+import {Property} from "./property/property";
+import {SlugTextFieldProperty} from "./property/slug-text-field-property";
+import {TextFieldProperty} from "./property/textfield-property";
+import {TextAreaProperty} from "./property/text-area-property";
+import {DisabledOption, Option} from "./options/Option";
+import {Source} from "./source/source";
+import {LocalFileSource} from "./source/LocalFileSource";
+import {RemoteFileSource} from "./source/RemoteFileSource";
+import {CameraSource} from "./source/CameraSource";
+import {Frame} from "./frame/frame";
+import {DisplayOnlyFrame} from "./frame/display-only-frame";
+import {EditorFrame} from "./frame/editor-frame";
+import {Mask} from "./frame/mask/mask";
+import {MaskDefault} from "./frame/mask/mask-default";
+import {MaskCircle} from "./frame/mask/mask-circle";
+import {Mask16_9} from "./frame/mask/Mask16_9";
+import {Mask4_3} from "./frame/mask/mask-4-3";
 
 ((S)=>{
     Object.assign(S, {
         ImageCapture,
+        Source: {
+            Source,
+            LocalFileSource,
+            RemoteFileSource,
+            CameraSource
+        },
+        Frame: {
+            Frame,
+            DisplayOnlyFrame,
+            EditorFrame
+        },
+        Mask: {
+            Mask,
+            MaskDefault,
+            MaskCircle,
+            Mask16_9,
+            Mask4_3
+        },
         Checker: {
             FileChecker,
             QualityChecker,
             RatioChecker,
             DimensionChecker,
             FileSizeChecker
+        },
+        Property: {
+            Property,
+            TextFieldProperty,
+            TextAreaProperty,
+            SlugTextFieldProperty
+        },
+        Option: {
+            Option,
+            DisabledOption
         }
     })
 })(window.Skyline);
