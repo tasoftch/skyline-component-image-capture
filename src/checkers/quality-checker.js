@@ -1,22 +1,6 @@
 import {FileChecker} from "./file-checker";
 import {i18n} from "../i18n";
 
-const _imageBreakpoints = [
-    {q:0, l: i18n.quality_insufficient, c: 'danger', ok: false},
-    {q:768, l: i18n.quality_scarce, c: 'warning', ok: true},
-    {q:1439, l: i18n.quality_sufficient, c: 'warning', ok: true},
-    {q:1919, l: i18n.quality_sufficient, c: 'success', ok: true},
-    {q:200000, l: i18n.quality_perfect, c: 'success', ok: true}
-]
-
-const _iconBreakpoints = [
-    {q:0, l: i18n.quality_insufficient, c: 'danger', ok: false},
-    {q:100, l: i18n.quality_scarce, c: 'warning', ok: true},
-    {q:256, l: i18n.quality_sufficient, c: 'warning', ok: true},
-    {q:512, l: i18n.quality_sufficient, c: 'success', ok: true},
-    {q:200000, l: i18n.quality_perfect, c: 'success', ok: true}
-]
-
 export class QualityChecker extends FileChecker {
     get template() {
         return "<li class=\"list-group-item d-flex justify-content-between p-1\">\n" +
@@ -25,11 +9,29 @@ export class QualityChecker extends FileChecker {
             "                            </li>\n";
     }
 
-    static get IMAGE_BREAKPOINTS() { return _imageBreakpoints; }
-    static get ICON_BREAKPOINTS() { return _iconBreakpoints; }
+    static get IMAGE_BREAKPOINTS() { return [
+        {q:767, l: i18n.quality_scarce, c: 'warning', ok: true},
+        {q:1023, l: i18n.quality_sufficient, c: 'warning', ok: true},
+        {q:1439, l: i18n.quality_OK, c: 'success', ok: true},
+        {q:1919, l: i18n.quality_perfect, c: 'success', ok: true}
+    ]; }
+    static get ICON_BREAKPOINTS() { return [
+        {q:99, l: i18n.quality_scarce, c: 'warning', ok: true},
+        {q:256, l: i18n.quality_sufficient, c: 'warning', ok: true},
+        {q:511, l: i18n.quality_OK, c: 'success', ok: true},
+        {q:1023, l: i18n.quality_perfect, c: 'success', ok: true}
+    ]; }
 
     constructor(breakpoints) {
         super();
+        if(typeof breakpoints.sort === 'function')
+            breakpoints.sort((a,b) => {
+                if(a.q < b.q)
+                    return -1;
+                if(a.q > b.q)
+                    return 1;
+                return 0;
+            });
         this.breakpoints = breakpoints;
     }
 
@@ -46,9 +48,9 @@ export class QualityChecker extends FileChecker {
     checkImage(image, file) {
         let ms = Math.max(image.width, image.height);
 
-        let clazz = '', label = '', ok = true;
+        let clazz = 'danger', label = i18n.quality_insufficient, ok = false;
         this.breakpoints.forEach((bp) => {
-            if(clazz === '' || ms > bp.q) {
+            if(ms > bp.q) {
                 clazz = bp.c;
                 label = bp.l;
                 ok = bp.ok;
