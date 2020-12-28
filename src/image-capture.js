@@ -7,17 +7,13 @@ export const _limits = {FILE_SIZE: 2e6, UPLOADS: 20, POST_SIZE: 8e6};
 
 import $ from "./jquery";
 import {ImageCaptureView} from "./image-capture-view";
-import {QualityChecker} from "./checkers/quality-checker";
-import {DimensionChecker} from "./checkers/dimension-checker";
-import {FileSizeChecker} from "./checkers/file-size-checker";
 import {i18n} from "./i18n";
-import {SlugTextFieldProperty} from "./property/slug-text-field-property";
-import {TextFieldProperty} from "./property/textfield-property";
 import {_option} from "./templates/option";
-import {Option} from "./options/Option";
 import {Emitter} from "./core/emitter";
 import {Events} from "./core/events";
-import {RatioChecker} from "./checkers/ratio-checker";
+import {Source} from "./source/source";
+import {Frame} from "./frame/frame";
+import {DisplayOnlyFrame} from "./frame/display-only-frame";
 
 
 const _templates = {
@@ -26,23 +22,20 @@ const _templates = {
     option: _option
 }
 
-const $panel = $(_templates.panel);
-
-$(()=>{
-    $(document.body).append($panel);
-})
-
 class ImageCapture extends Emitter {
     get LIMITS() { return _limits; }
     get TEMPLATES() { return _templates; }
+    get TRANSLATIONS() { return i18n; }
 
-    constructor({checkers = null, properties = null, options = null}) {
+    constructor({checkers = null, properties = null, options = null, sources=null, frame = null}) {
         super(new Events());
 
         this.checkers = [];
         this.properties = new Map();
         this.options = new Map();
-        this.view = new ImageCaptureView(this, $panel);
+        this.sources = new Map();
+
+        this.setupFrame(frame);
 
         if(checkers)
             checkers.forEach(c=>this.addChecker(c));
@@ -50,7 +43,66 @@ class ImageCapture extends Emitter {
             properties.forEach(p=>this.addProperty(p));
         if(options)
             options.forEach(o=>this.addOption(o));
+        if(sources)
+            sources.forEach(o=>this.addSource(o));
     }
+
+    get view() {
+        if(!this._view) {
+            const $panel = $(_templates.panel());
+            $(document.body).append($panel);
+            this._view = new ImageCaptureView(this, $panel);
+        }
+        return this._view;
+    }
+
+    addSource(source) {
+        if(source instanceof Source) {
+            this.sources.set(source.name, source);
+            source.handler((d) => {
+                if(this.sources.has(source.name))
+                    this.updateFromInput(d)
+            });
+            this.view.addSource(source);
+            if(source.selectByDefault)
+                this.selectSource(source);
+        }
+        return this;
+    }
+
+    removeSource(source) {
+        if(source instanceof Source)
+            source = source.name;
+
+        const prop = this.sources.get(source);
+        if(prop) {
+            this.view.removeSource(prop);
+        }
+        this.sources.delete(source);
+        return this;
+    }
+
+    clearSources() {
+        this.sources.forEach(c=>this-this.removeSource(c));
+    }
+
+    selectSource(source) {
+        if(source instanceof Source) {
+            source.select();
+            this.view.select(source);
+        }
+    }
+
+
+    setupFrame(frame) {
+        if(frame instanceof Frame) {
+            this.frame = frame;
+            this.view.setupFrame(frame);
+        } else {
+            this.setupFrame( new DisplayOnlyFrame() );
+        }
+    }
+
 
     addChecker(checker) {
         if(checker instanceof FileChecker) {
@@ -123,52 +175,58 @@ class ImageCapture extends Emitter {
     run(target) {
         this.checkers.forEach(c=>c.reset());
         this.properties.forEach(p=>p.reset());
+        this.sources.forEach(p=>p.reset());
+        this.frame.reset();
         this.view.propertyEl.find(".alert").remove();
 
         this.view.runModal();
     }
 
-    updateFromInput(input) {
-        var file = input.files[0];
+    updateFromInput(file) {
+        if(!file)
+            throw new Error("image capture did not receive any file.");
 
         if(/^image\/.+/.test(file.type)) {
             var fr = new FileReader();
             fr.onload = () => {
-                let img = this.view.imageEl;
-                img.onload = () => {
-                    this.file = file;
+                this.file = file;
 
-                    this.view.fileInfo.show();
-                    this.view.fileSelect.hide();
+                const i = new Image();
+                this.image = i;
+                i.src = fr.result;
 
-                    const i = new Image();
-                    this.image = i;
-                    i.src = img.src;
 
-                    let ok = true;
+                this.frame.loadImage({
+                    file,
+                    image: i,
+                    complete:()=>{
+                        this.view.fileInfo.show();
+                        this.view.sourcesElM.hide();
+                        this.view.selectedSource.deselect();
 
-                    this.checkers.forEach(c=>{
-                        ok = c.checkImage(i, file) && ok;
-                    });
+                        let ok = true;
 
-                    this.properties.forEach(p=>p.willAppear(i, file));
+                        this.checkers.forEach(c=>{
+                            ok = c.checkImage(i, file) && ok;
+                        });
 
-                    this.options.forEach(o=>{
-                        if(typeof o.willAppear === 'function')
-                            o.willAppear(i, file, this.view.options.get(o).find("input")[0]);
-                    })
+                        this.properties.forEach(p=>p.willAppear(i, file));
 
-                    if(ok)
-                        this.view.saveButton.attr("disabled", false);
+                        this.options.forEach(o=>{
+                            if(typeof o.willAppear === 'function')
+                                o.willAppear(i, file, this.view.options.get(o).find("input")[0]);
+                        })
 
-                    this.trigger('update', {file, image:i});
-                };
+                        if(ok)
+                            this.view.saveButton.attr("disabled", false);
 
-                img.onerror = () => {
-                    this.view.presentError(i18n.image_load_error, 'error');
-                    this.trigger('error')
-                }
-                img.src = fr.result;
+                        this.trigger('update', {file, image:i});
+                    },
+                    error:()=>{
+                        this.view.presentError(i18n.image_load_error, 'error');
+                        this.trigger('error')
+                    }
+                });
             }
             fr.readAsDataURL(file);
         }
@@ -181,33 +239,38 @@ class ImageCapture extends Emitter {
             this.properties.forEach(p=>{
                 p.validate(this.image, this.file)
             });
+
+            const properties = {};
+            this.properties.forEach(p=> properties[p.name] = p.value );
+            let options = 0;
+            this.options.forEach(o=>{
+                options |= o.value;
+            });
+
+            this.view.progressEl.show();
+            const pfn = (p)=>{
+                p = Math.round(p * 100);
+                this.view.progressEl.find(".progress-bar")
+                    .css("width", p + "%")
+                    .attr("aria-valuenow", p)
+                    .text(p + "%");
+            };
+
+            pfn(0);
+
+            this.frame.saveProperties( properties );
+
+            this.trigger('save', {file:this.file, image:this.image, options, properties, progress:pfn, done:()=>{
+                    this.view._skip_c = true;
+                    this.cancel();
+                    this.view._skip_c = false;
+                }, error:(message) => {
+                    this.view.progressEl.hide();
+                    this.view.propertyEl.prepend( "<div class='alert alert-danger'>"+message+"</div>" );
+                }});
         } catch (e) {
             this.view.propertyEl.prepend( "<div class='alert alert-danger'>"+e.message+"</div>" );
         }
-
-        const properties = {};
-        this.properties.forEach(p=> properties[p.name] = p.value );
-        let options = 0;
-        this.options.forEach(o=>{
-            options |= o.value;
-        });
-
-        this.view.progressEl.show();
-        const pfn = (p)=>{
-            p = Math.round(p * 100);
-            this.view.progressEl.find(".progress-bar")
-                .css("width", p + "%")
-                .attr("aria-valuenow", p)
-                .text(p + "%");
-        };
-        
-        pfn(0);
-
-        this.trigger('save', {file:this.file, image:this.image, options, properties, progress:pfn, done:()=>{
-            this.view._skip_c = true;
-            this.cancel();
-                this.view._skip_c = false;
-            }});
     }
 
     cancel() {
