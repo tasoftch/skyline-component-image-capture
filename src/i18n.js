@@ -40,6 +40,16 @@ export const i18n = {
     modal_cancel: "Cancel",
     modal_accept: "Upload",
 
+    modal_drop_zone_text: "Or drop file here…",
+
+    source_local_file: "Disk",
+    source_remote_file: "URL",
+    source_remote_file_load: "Load…",
+    source_camera: "Camera",
+    source_camera_error: "Could not init or load from camera.",
+    source_camera_capture: "Capture",
+    source_camera_default_name: "captured.jpg",
+
     quality_title: "Quality",
     quality_perfect: "Perfect",
     quality_OK: "OK",
@@ -67,5 +77,6 @@ export const i18n = {
     options_label: "Options",
     option_scale_to_best: "Scale to optimal size",
     option_render_preview: "Render preview",
-    option_make_watermark: "Render Watermark"
+    option_make_watermark: "Render Watermark",
+    option_make_main: "Make main image"
 }
