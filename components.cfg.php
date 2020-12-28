@@ -37,8 +37,7 @@ return [
 			...AbstractComponent::makeLocalFileComponentArguments(
 				'/Public/Skyline/image-capture.dyn.min.js',
 				__DIR__ . "/dist/skyline-component-image-capture.js.php",
-				NULL,
-				NULL
+				NULL // Do not create integrity because of dynamic contents in .js.php files
 			)
 		),
 		'css' => new CSSComponent(
@@ -53,5 +52,16 @@ return [
 		'@require' => [
 			'Skyline'
 		]
-    ]
+    ],
+	"ImageCaptureGerman" => [
+		'js' => new JavaScriptPostLoadComponent(
+				...AbstractComponent::makeLocalFileComponentArguments(
+				'/Public/Skyline/image-capture.de.js',
+				__DIR__ . "/dist/skyline-component-image-capture.de.js"
+			)
+		),
+		'@require' => [
+			'ImageCapture'
+		]
+	]
 ];
