@@ -1,7 +1,7 @@
 
 import {i18n} from "../i18n";
 
-export const _panel = "<div class=\"modal fade\" id=\"sky-it-capture-modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"sky-it-capture-modal-titel\"\n" +
+export const _panel = ()=>{return "<div class=\"modal fade\" id=\"sky-it-capture-modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"sky-it-capture-modal-titel\"\n" +
         "     aria-hidden=\"true\">\n" +
         "    <div class=\"modal-dialog\" role=\"document\">\n" +
         "        <div class=\"modal-content\">\n" +
@@ -15,21 +15,19 @@ export const _panel = "<div class=\"modal fade\" id=\"sky-it-capture-modal\" tab
         "                    <p>\n" +
         i18n.modal_description +
         "                    </p>\n" +
-        "                    <div class=\"form-group file-select\" data-placeholder=\"Or put here\">\n" +
-        "                        <label> </label>\n" +
-        "                        <input type=\"file\" class=\"form-control\" accept='image/jpeg,image/png,image/gif,image/bmp,image/tiff'>\n" +
-        "                    </div>\n" +
-        "                    <div class=\"file-info\">\n" +
-        "                        <figure class=\"figure w-100 text-center\">\n" +
-        "                            <img class=\"w-75 img-fluid rounded shadow\" src=\"\" alt=\"\">\n" +
-        "                        </figure>\n" +
+        "                    <div class='sources'>" +
+    "<ul class='nav nav-tabs' role='tablist'></ul>\n" +
+    "<div class=\"tab-content\">\n" +
+    "</div>" +
+    "</div>" +
+    "                           <div class=\"file-info\"><div class='frame-set'></div>\n" +
         "                        <ul class=\"list-group\">\n" +
         "                        </ul>\n" +
         "\n" +
         "                        <hr class=\"my-2\">\n" +
         "                        <div class='property-container'></div>" +
     "                            <div class=\"form-group row\">\n" +
-        "                            <label for=\"\" class=\"col-lg-2 col-form-label\">"+i18n.options_label+"</label>\n" +
+        "                            <label for=\"\" class=\"col-lg-2 col-form-label options-label d-none\">"+i18n.options_label+"</label>\n" +
         "                            <div class=\"col-md-9 pt-1\">\n" +
         "                                <div class=\"option-container\"></div>\n" +
         "                            </div>\n" +
@@ -46,4 +44,4 @@ export const _panel = "<div class=\"modal fade\" id=\"sky-it-capture-modal\" tab
         "            <button type=\"button\" class=\"btn btn-sm btn-outline-success\" data-role=\"update\">"+i18n.modal_accept+"</button>\n" +
         "        </div>\n" +
         "    </div>\n" +
-        "</div>";
+        "</div>"};
