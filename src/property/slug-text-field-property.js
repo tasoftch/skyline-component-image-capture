@@ -19,7 +19,7 @@ export class SlugTextFieldProperty extends TextFieldProperty {
 
     get value() {
         let slug = super.value;
-        if(slug.split(".").pop() === this.boundE.text())
+        if("." + slug.split(".").pop() === this.boundE.text())
             return slug;
         return slug +this.boundE.text();
     }
