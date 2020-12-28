@@ -7,7 +7,7 @@ import Skyline from "../skyline"
 export class Property extends Renderable {
     get template() { return ({id, placeholder}) => { return ""; }; }
 
-    constructor({name, label = null, icon = null, placeholder = null}) {
+    constructor({name, label = null, icon = null, placeholder = ""}) {
         super();
         this.id = Skyline.guid();
         this.name = name;
