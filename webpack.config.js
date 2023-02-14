@@ -21,6 +21,7 @@
  */
 
 const pkg = require('./package.json');
+const path = require("path");
 
 const name = pkg.name;
 module.exports = (env = {}) => {
@@ -31,7 +32,8 @@ module.exports = (env = {}) => {
         output: {
             filename: `./${name}.min.js`,
             library: name,
-            libraryTarget: 'umd'
+            libraryTarget: 'umd',
+            path: path.resolve(__dirname, 'dist')
         },
         module: {
             rules: [{

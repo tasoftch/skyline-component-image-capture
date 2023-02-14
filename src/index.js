@@ -32,7 +32,6 @@
  *
  */
 
-import ImageCapture from "./image-capture";
 import {FileChecker} from "./checkers/file-checker";
 import {QualityChecker} from "./checkers/quality-checker";
 import {RatioChecker} from "./checkers/ratio-checker";
@@ -55,6 +54,7 @@ import {MaskDefault} from "./frame/mask/mask-default";
 import {MaskCircle} from "./frame/mask/mask-circle";
 import {Mask16_9} from "./frame/mask/Mask16_9";
 import {Mask4_3} from "./frame/mask/mask-4-3";
+import {ImageCapture} from "./image-capture";
 
 ((S)=>{
     Object.assign(S, {

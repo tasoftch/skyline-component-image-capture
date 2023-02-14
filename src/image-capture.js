@@ -22,7 +22,7 @@ const _templates = {
     option: _option
 }
 
-class ImageCapture extends Emitter {
+export class ImageCapture extends Emitter {
     get LIMITS() { return _limits; }
     get TEMPLATES() { return _templates; }
     get TRANSLATIONS() { return i18n; }
@@ -278,7 +278,7 @@ class ImageCapture extends Emitter {
     }
 }
 
-export default new ImageCapture({
+//export default new ImageCapture({
     /*  By default, the image checker needs to be configured depending on your application.
     checkers:[
         new QualityChecker( QualityChecker.qualityBreakpoints ),
@@ -297,4 +297,4 @@ export default new ImageCapture({
         new Option({id:4, label: i18n.option_make_watermark, checkedByDefault: false})
     ]
      */
-});
+//});
