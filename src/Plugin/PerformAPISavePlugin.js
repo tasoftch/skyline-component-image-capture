@@ -59,7 +59,7 @@ export class PerformAPISavePlugin extends Plugin {
 
             API.post(this.target, fd)
                 .error(error)
-                .done(()=>{
+                .success(()=>{
                     progress(1);
                     done();
                 })
