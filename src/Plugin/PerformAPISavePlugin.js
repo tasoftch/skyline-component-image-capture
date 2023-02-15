@@ -55,10 +55,13 @@ export class PerformAPISavePlugin extends Plugin {
             fd.append('ic-file', file);
             fd.append('ic-options', options);
             fd.append('ic-props', JSON.stringify(properties));
-            fd.append('ic-slug', progress.slug);
+            if(typeof progress.slug !== 'undefined')
+                fd.append('ic-slug', progress.slug);
 
             API.post(this.target, fd)
-                .error(error)
+                .error(e=>{
+                    error(e.message ? e.message : e);
+                })
                 .success(()=>{
                     progress(1);
                     done();

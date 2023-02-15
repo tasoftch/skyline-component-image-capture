@@ -52,6 +52,7 @@
 
         source_current_name: "Bild",
         source_current_delete: "Löschen",
+        source_confirm_delete: "Willst Du dieses Bild wirklich löschen?",
 
         quality_title: "Qualität",
         quality_perfect: "Perfekt",

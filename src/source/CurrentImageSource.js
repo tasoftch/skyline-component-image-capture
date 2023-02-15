@@ -61,10 +61,12 @@ export class CurrentImageSource extends Source {
             $t.find("button").remove();
         else
             $t.find("button").on("click", () => {
-                this.emitter.trigger("delete", {file:this.current_image_uri, success:()=>{
-                    this.image.attr("src", this.default_image_uri);
-                        $t.find("button").remove();
-                    }});
+               if(confirm(i18n.source_confirm_delete)) {
+                   this.emitter.trigger("delete", {file:this.current_image_uri, success:()=>{
+                           this.image.attr("src", this.default_image_uri);
+                           $t.find("button").remove();
+                       }});
+               }
             });
     }
 }

@@ -52,6 +52,7 @@ export const i18n = {
 
     source_current_name: "Current",
     source_current_delete: "Delete",
+    source_confirm_delete: "Do you really want to remove this image?",
 
     quality_title: "Quality",
     quality_perfect: "Perfect",

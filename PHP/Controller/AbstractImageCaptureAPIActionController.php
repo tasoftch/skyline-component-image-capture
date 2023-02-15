@@ -85,7 +85,7 @@ abstract class AbstractImageCaptureAPIActionController extends AbstractAPIAction
 		if($error)
 			throw new UploadErrorException("Upload did fail", $error);
 
-		$slug = $this->normalizeSlug( $request->get("ic-slug") ?: "" );
+		$slug = $this->normalizeSlug( $request->get("ic-slug") ?: $name );
 		$options = ($request->get("ic-options") ?: $this->getDefaultOptions()) | $this->getRequiredOptions();
 
 		$original_path = $this->getOriginalImagesDirectory() . DIRECTORY_SEPARATOR . $slug;
@@ -181,7 +181,7 @@ abstract class AbstractImageCaptureAPIActionController extends AbstractAPIAction
 				// TODO: Watermark render
 			}
 
-			if($num = $this->completeImageCaptureRequest($original_path, $preview_path ?? "", $slug, $options, $properties["caption"] ?: "", $properties["alt"] ?: "")) {
+			if($num = $this->completeImageCaptureRequest($original_path, $preview_path ?? "", $slug, $options, $properties["caption"] ?? "", $properties["alt"] ?? "")) {
 				$model = $this->getModel();
 
 				$model["src"] = $this->getRequestURIForLocalPath($original_path, false);
@@ -202,7 +202,7 @@ abstract class AbstractImageCaptureAPIActionController extends AbstractAPIAction
 	}
 
 	protected function readFileRequest(Request $request, &$name=NULL, &$type=NULL, &$temp=NULL, &$error=NULL, &$size=NULL): bool {
-		$file = $request->files->get("ic-file");
+		$file = $_FILES["ic-file"];
 
 		if($file) {
 			$name = $file["name"];
