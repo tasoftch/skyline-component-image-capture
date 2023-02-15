@@ -50,6 +50,7 @@ export const i18n = {
     source_camera_capture: "Capture",
     source_camera_default_name: "captured.jpg",
 
+    source_current_name: "Current",
     source_current_delete: "Delete",
 
     quality_title: "Quality",

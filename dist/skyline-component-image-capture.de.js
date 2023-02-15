@@ -50,6 +50,7 @@
         source_camera_capture: "Los!",
         source_camera_default_name: "aufnahme.jpg",
 
+        source_current_name: "Bild",
         source_current_delete: "Löschen",
 
         quality_title: "Qualität",

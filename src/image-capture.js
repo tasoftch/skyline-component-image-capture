@@ -27,14 +27,13 @@ export class ImageCapture extends Emitter {
     static get TEMPLATES() { return _templates; }
     static get TRANSLATIONS() { return i18n; }
 
-    constructor(reference, {checkers = null, properties = null, options = null, sources=null, frame = null}) {
+    constructor({checkers = null, properties = null, options = null, sources=null, frame = null}) {
         super(new Events());
 
         this.checkers = [];
         this.properties = new Map();
         this.options = new Map();
         this.sources = new Map();
-        this.reference = reference;
 
         this.setupFrame(frame);
 

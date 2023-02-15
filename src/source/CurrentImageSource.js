@@ -36,7 +36,7 @@ import {i18n} from "../i18n";
 
 export class CurrentImageSource extends Source {
     get name() {
-        return "current-src";
+        return i18n.source_current_name;
     }
 
     constructor(current_image_uri, default_image_uri, can_delete) {
