@@ -57,6 +57,7 @@ import {Mask4_3} from "./frame/mask/mask-4-3";
 import {ImageCapture} from "./image-capture";
 import {Plugin} from "./Plugin/Plugin";
 import {PerformAPISavePlugin} from "./Plugin/PerformAPISavePlugin";
+import {CurrentImageSource} from "./source/CurrentImageSource";
 
 ((S)=>{
     Object.assign(S, {
@@ -65,7 +66,8 @@ import {PerformAPISavePlugin} from "./Plugin/PerformAPISavePlugin";
             Source,
             LocalFileSource,
             RemoteFileSource,
-            CameraSource
+            CameraSource,
+            CurrentImageSource
         },
         Frame: {
             Frame,
