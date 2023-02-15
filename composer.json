@@ -7,10 +7,21 @@
       "email": "info@tasoft.ch"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "Skyline\\ImageCapture\\": "PHP"
+    }
+  },
   "require" : {
-    "skyline/component-skyline": "^0.8|^8"
+    "skyline/component-skyline": "^0.8|^8",
+    "ext-json": "*"
   },
   "require-dev": {
-    "skyline/direct-components": "^0.8|^8"
+    "skyline/direct-components": "^0.8|^8",
+    "skyline/image-render-tool": "dev-master",
+    "skyline/api": "^0.9|^8"
+  },
+  "suggest": {
+    "skyline/image-render-tool": "^0.8|^8"
   }
 }

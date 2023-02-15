@@ -2,6 +2,13 @@
 export class Emitter {
     constructor(events) {
         this.events = events instanceof Emitter ? events.events : events.handlers;
+        this.plugins = new Map();
+    }
+
+    use(plugin, params) {
+        if(plugin.name && this.plugins.has(plugin.name)) throw new Error(`Plugin ${plugin.name} already in use`)
+        plugin.install(this, params || {});
+        this.plugins.set(plugin.name, plugin)
     }
 
     on(names, handler) {

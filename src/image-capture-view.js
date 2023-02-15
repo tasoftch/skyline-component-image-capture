@@ -62,7 +62,7 @@ export class ImageCaptureView {
 
             this.sourcesEl.append(w);
 
-            const $t = $("<li class='nav-item' role='presentation'><a class=\"nav-link\" href='#' onclick='return false;'>"+source.name+"</a></li>");
+            const $t = $("<li class='nav-item' role='presentation'><a class=\"nav-link ic-tab-item\" href='#' onclick='return false;'>"+source.name+"</a></li>");
             $t.on("click", () => {
                 this._emitter.selectSource(source);
             })

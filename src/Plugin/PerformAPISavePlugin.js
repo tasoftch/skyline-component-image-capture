@@ -1,4 +1,3 @@
-
 /*
  * BSD 3-Clause License
  *
@@ -32,53 +31,50 @@
  *
  */
 
-export const i18n = {
-    modal_title: "Upload New Image",
-    modal_close: "Close",
-    modal_description: "Here you can choose and upload images to your application",
+import {Plugin} from "./Plugin";
 
-    modal_cancel: "Cancel",
-    modal_accept: "Upload",
+import API from "../api";
 
-    modal_drop_zone_text: "Or drop file here…",
+export class PerformAPISavePlugin extends Plugin {
+    constructor(target, reference) {
+        super();
+        this.reference = reference;
+        this.target = target;
+    }
 
-    source_local_file: "Disk",
-    source_remote_file: "URL",
-    source_remote_file_load: "Load…",
-    source_camera: "Camera",
-    source_camera_error: "Could not init or load from camera.",
-    source_camera_capture: "Capture",
-    source_camera_default_name: "captured.jpg",
+    get name() {
+        return "api-save";
+    }
 
-    source_current_delete: "Delete",
+    install(emitter, params) {
+        emitter.on("save", ({file, options, properties, progress, done, error})=>{
+            const fd = new FormData();
 
-    quality_title: "Quality",
-    quality_perfect: "Perfect",
-    quality_OK: "OK",
-    quality_sufficient: "Sufficient",
-    quality_scarce: "Scarce",
-    quality_insufficient: "insufficient",
+            if(this.reference !== undefined)
+                fd.append('ic-ref', this.reference);
+            fd.append('ic-file', file);
+            fd.append('ic-options', options);
+            fd.append('ic-props', JSON.stringify(properties));
+            fd.append('ic-slug', progress.slug);
 
-    ratio_title: "Aspect Ratio",
-    ratio_bad: "Bad ratio (required 16:9 until 1:1)",
+            API.post(this.target, fd)
+                .error(error)
+                .done(()=>{
+                    progress(1);
+                    done();
+                })
+                .upload(p => {
+                    progress(p/100);
+                })
+        }).on("delete", ({file, success})=>{
+            const fd = new FormData();
 
-    dimension_title: "Dimension",
-    size_title: "Size",
+            if(this.reference !== undefined)
+                fd.append('ic-ref', this.reference);
+            fd.append("ic-delete", file);
 
-    property_slug_error: "Slug must only contain latin characters",
-
-    image_load_error: "Could not load the image.",
-
-    property_slug_label: "Slug",
-    property_slug_placeholder: "my-file",
-    property_caption_label: 'Caption',
-    property_caption_placeholder: "My Image",
-    property_alt_label: "Alt",
-    property_alt_placeholder: "Text in error case",
-
-    options_label: "Options",
-    option_scale_to_best: "Scale to optimal size",
-    option_render_preview: "Render preview",
-    option_make_watermark: "Render Watermark",
-    option_make_main: "Make main image"
+            API.post(this.target, fd)
+                .success(success)
+        })
+    }
 }

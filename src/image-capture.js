@@ -23,17 +23,18 @@ const _templates = {
 }
 
 export class ImageCapture extends Emitter {
-    get LIMITS() { return _limits; }
-    get TEMPLATES() { return _templates; }
-    get TRANSLATIONS() { return i18n; }
+    static get LIMITS() { return _limits; }
+    static get TEMPLATES() { return _templates; }
+    static get TRANSLATIONS() { return i18n; }
 
-    constructor({checkers = null, properties = null, options = null, sources=null, frame = null}) {
+    constructor(reference, {checkers = null, properties = null, options = null, sources=null, frame = null}) {
         super(new Events());
 
         this.checkers = [];
         this.properties = new Map();
         this.options = new Map();
         this.sources = new Map();
+        this.reference = reference;
 
         this.setupFrame(frame);
 
@@ -66,6 +67,7 @@ export class ImageCapture extends Emitter {
             this.view.addSource(source);
             if(source.selectByDefault)
                 this.selectSource(source);
+            source.emitter = this;
         }
         return this;
     }

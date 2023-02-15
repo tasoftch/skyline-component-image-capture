@@ -55,6 +55,8 @@ import {MaskCircle} from "./frame/mask/mask-circle";
 import {Mask16_9} from "./frame/mask/Mask16_9";
 import {Mask4_3} from "./frame/mask/mask-4-3";
 import {ImageCapture} from "./image-capture";
+import {Plugin} from "./Plugin/Plugin";
+import {PerformAPISavePlugin} from "./Plugin/PerformAPISavePlugin";
 
 ((S)=>{
     Object.assign(S, {
@@ -93,6 +95,10 @@ import {ImageCapture} from "./image-capture";
         Option: {
             Option,
             DisabledOption
+        },
+        Plugin: {
+            Plugin,
+            PerformAPISavePlugin
         }
     })
 })(window.Skyline);

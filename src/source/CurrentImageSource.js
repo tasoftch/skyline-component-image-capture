@@ -1,4 +1,3 @@
-
 /*
  * BSD 3-Clause License
  *
@@ -32,53 +31,40 @@
  *
  */
 
-export const i18n = {
-    modal_title: "Upload New Image",
-    modal_close: "Close",
-    modal_description: "Here you can choose and upload images to your application",
+import {Source} from "./source";
+import {i18n} from "../i18n";
 
-    modal_cancel: "Cancel",
-    modal_accept: "Upload",
+export class CurrentImageSource extends Source {
+    get name() {
+        return "current-src";
+    }
 
-    modal_drop_zone_text: "Or drop file here…",
+    constructor(current_image_uri, default_image_uri, can_delete) {
+        super();
+        this.current_image_uri = current_image_uri;
+        this.default_image_uri = default_image_uri;
+        this.can_delete = can_delete;
+    }
 
-    source_local_file: "Disk",
-    source_remote_file: "URL",
-    source_remote_file_load: "Load…",
-    source_camera: "Camera",
-    source_camera_error: "Could not init or load from camera.",
-    source_camera_capture: "Capture",
-    source_camera_default_name: "captured.jpg",
+    get template() {
+        return "<div class='d-flex justify-content-center'><div class='d-inline-block position-relative mx-auto my-3'>\n" +
+            "    <img src='' style='max-width: 300px; max-height: 300px'>\n" +
+            "  <button class=\"btn btn-sm btn-outline-danger\" style=\"position: absolute; bottom: 1em; left: 50%;\">"+i18n.source_current_delete+"</button>" +
+            " </div></div>";
+    }
 
-    source_current_delete: "Delete",
+    bindTemplate($t) {
+        this.image = $t.find("img");
+        this.image.attr("src", this.current_image_uri);
 
-    quality_title: "Quality",
-    quality_perfect: "Perfect",
-    quality_OK: "OK",
-    quality_sufficient: "Sufficient",
-    quality_scarce: "Scarce",
-    quality_insufficient: "insufficient",
-
-    ratio_title: "Aspect Ratio",
-    ratio_bad: "Bad ratio (required 16:9 until 1:1)",
-
-    dimension_title: "Dimension",
-    size_title: "Size",
-
-    property_slug_error: "Slug must only contain latin characters",
-
-    image_load_error: "Could not load the image.",
-
-    property_slug_label: "Slug",
-    property_slug_placeholder: "my-file",
-    property_caption_label: 'Caption',
-    property_caption_placeholder: "My Image",
-    property_alt_label: "Alt",
-    property_alt_placeholder: "Text in error case",
-
-    options_label: "Options",
-    option_scale_to_best: "Scale to optimal size",
-    option_render_preview: "Render preview",
-    option_make_watermark: "Render Watermark",
-    option_make_main: "Make main image"
+        if(!this.can_delete)
+            $t.find("button").remove();
+        else
+            $t.find("button").on("click", () => {
+                this.emitter.trigger("delete", {file:this.current_image_uri, success:()=>{
+                    this.image.attr("src", this.default_image_uri);
+                        $t.find("button").remove();
+                    }});
+            });
+    }
 }
