@@ -4,6 +4,7 @@ export class Events {
             update: [],
             error:[console.error],
             save:[],
+            saved:[],
             delete: [],
             cancel: []
         }

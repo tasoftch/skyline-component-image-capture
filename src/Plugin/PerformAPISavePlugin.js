@@ -62,8 +62,9 @@ export class PerformAPISavePlugin extends Plugin {
                 .error(e=>{
                     error(e.message ? e.message : e);
                 })
-                .success(()=>{
+                .success((d)=>{
                     progress(1);
+                    emitter.trigger("saved", d)
                     done();
                 })
                 .upload(p => {
